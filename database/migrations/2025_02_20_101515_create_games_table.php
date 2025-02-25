@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string('join_code')->unique();
+            $table->unsignedInteger('plays')->default(0); // Add this line
             $table->timestamps();
         });
     }

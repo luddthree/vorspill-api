@@ -37,8 +37,13 @@ class GameController extends Controller
 
     public function fetch($joinCode)
     {
+        // Find the game by join code
         $game = Game::where('join_code', $joinCode)->firstOrFail();
-    
+
+        // Increment the plays count
+        $game->increment('plays');
+
+        // Fetch the questions for the game
         $questions = Question::where('game_id', $game->id)->get()->map(function ($question) {
             return [
                 'text' => $question->text,
@@ -47,5 +52,12 @@ class GameController extends Controller
         });
 
         return response()->json($questions);
+    }
+
+    // Fetch the most played games
+    public function mostPlayed()
+    {
+        $mostPlayedGames = Game::orderBy('plays', 'desc')->take(10)->get(); // Get top 10 most played games
+        return response()->json($mostPlayedGames);
     }
 }
