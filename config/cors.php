@@ -15,13 +15,14 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
+    // 'paths' => ['api/*'],
+    'paths' => [],
 
     'allowed_methods' => ['*'],
 
     // 'allowed_origins' => [env('FRONTEND_URL', 'http://localhost:3001')],
     // 'allowed_origins' => ['http://localhost:3000'], // Remove '*'
-    // 'allowed_origins' => ['*'],
+    'allowed_origins' => ['*'],
 
 
     'allowed_origins_patterns' => [],
