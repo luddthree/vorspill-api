@@ -1,0 +1,111 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Game API",
+        "description": "API documentation for the game app",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/questions/create": {
+            "post": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Create a new game with questions",
+                "operationId": "2d458cc41bc9a5124671826d5072d63c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "join_code",
+                                    "questions"
+                                ],
+                                "properties": {
+                                    "join_code": {
+                                        "type": "string",
+                                        "example": "ABC123"
+                                    },
+                                    "questions": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "text": {
+                                                    "type": "string",
+                                                    "example": "What's your favorite drink?"
+                                                },
+                                                "category": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Game Created Successfully"
+                    },
+                    "400": {
+                        "description": "Invalid data provided"
+                    }
+                }
+            }
+        },
+        "/questions/{joinCode}": {
+            "get": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Fetch questions by join code",
+                "operationId": "57f69e8756630cd67c333f15e89cbe64",
+                "parameters": [
+                    {
+                        "name": "joinCode",
+                        "in": "path",
+                        "description": "Join code to retrieve the game",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of questions"
+                    },
+                    "404": {
+                        "description": "Game not found"
+                    }
+                }
+            }
+        },
+        "/games/most-played": {
+            "get": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Fetch the most played games",
+                "operationId": "50cec2efa6b8e8bd0ab1daafbc7e9abe",
+                "responses": {
+                    "200": {
+                        "description": "List of most played games"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Game",
+            "description": "Game"
+        }
+    ]
+}
