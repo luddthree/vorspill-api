@@ -42,7 +42,7 @@ class GameController extends Controller
 
         $turnstileToken = $request->input('turnstileToken');
 
-        $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+        $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/api.js', [
             'secret' => env('TURNSTILE_SECRET_KEY'),
             'response' => $turnstileToken,
         ]);
