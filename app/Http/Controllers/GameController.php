@@ -42,15 +42,18 @@ class GameController extends Controller
 
         $turnstileToken = $request->input('turnstileToken');
 
+        \Log::info('Turnstile Token: ' . $turnstileToken);
+
+
         $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
             'secret' => env('TURNSTILE_SECRET_KEY'),
             'response' => $turnstileToken,
         ]);
     
-        if ($response->json()['success']) {
-            return response()->json(['verified' => true]);
+        if (!$response->json()['success']) {
+            return response()->json(['error' => 'Robot verification failed'], 403);
         }
-
+        
         $validated = $request->validate([
             'join_code' => 'required|string',
             'questions' => 'required|array',
@@ -114,12 +117,5 @@ class GameController extends Controller
     {
         $mostPlayedGames = Game::orderBy('plays', 'desc')->take(10)->get();
         return response()->json($mostPlayedGames);
-
     }
-
-
-
-
-
-    
 }
